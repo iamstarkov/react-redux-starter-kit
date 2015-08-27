@@ -44,13 +44,9 @@ Features
     * Client bundle splits app code from vendor dependencies
   * webpack-dev-server
   * react-hot-loader
-  * sass-loader
-    * CSS extraction in production mode
   * babel w/ babel-runtime
   * eslint-loader
     * Configured to fail production builds on error
-  * Pre-configured aliases and globals
-  * Easy per-environment configuration
 
 **NOTE**: Bootstrap is loaded from its CDN for the sole purposes of making the example not look hideous. I didn't want to actually include it as an application dependency, so if you wish to remove it just delete its `<link>` tag in `~/src/index.html`.
 
@@ -76,15 +72,6 @@ Runs all tests for the application. When run in a production build, failing test
 
 #### `npm run test:unit`
 Similar to `npm run test`, but only runs unit tests. In development mode this will run in watch mode and re-run individual test files when they change.
-
-#### `npm run test:server`
-Runs the small test suite in `~/server/scripts/test.js`. This will ideally be expanded in the future to instead act as an entry point similar to what exists for client-side tests.
-
-#### `npm run server:start`
-Kicks off the Koa server (defaults to `localhost:4000`).
-
-#### `npm run server:dev`
-Kicks off the Koa server with Nodemon so any file changes in ~/server will trigger a server restart.
 
 #### `npm run deploy`
 Helper script to run tests and then, on success, compile your application. Server tests that rely on the compiled server bundle will be run after compilation finishes.
@@ -116,30 +103,6 @@ VENDOR_DEPENDENCIES : [
 ]
 ```
 
-### Aliases
-As mentioned in features, the default Webpack configuration provides some globals and aliases to make your life easier. These can be used as such:
-
-```js
-import MyComponent from '../../components/my-component'; // without alias
-import MyComponent from 'components/my-component'; // with alias
-
-  // Available aliases:
-  actions     => '~/src/actions'
-  components  => '~/src/components'
-  constants   => '~/src/constants'
-  containers  => '~/src/containers'
-  dispatchers => '~/src/dispatchers'
-  layouts     => '~/src/layouts'
-  models      => '~/src/models'
-  reducers    => '~/src/reducers'
-  routes      => '~/src/routes'
-  services    => '~/src/services'
-  stores      => '~/src/stores'
-  styles      => '~/src/styles'
-  utils       => '~/src/utils'
-  views       => '~/src/views'
-```
-
 ### Globals
 
 #### `__DEV__`
@@ -157,27 +120,6 @@ True when the client bundler is running.
 #### `__SERVER__`
 True when the server bundler is running.
 
-Styles
-------
-
-All `.scss` imports will be run through the sass-loader, extracted during production builds, and ignored during server builds. If you're requiring styles from a base styles directory (useful for generic, app-wide styles) in your JS, you can make use of the `styles` alias, e.g.:
-
-```js
-// ~/src/components/some/nested/component/index.jsx
-import `styles/core.scss`;
-```
-
-Furthermore, this `styles` directory is aliased for sass imports, which further eliminates manual directory traversing. An example nested `.scss` file:
-
-```scss
-// current path: ~/src/styles/some/nested/style.scss
-// what used to be this:
-@import '../../base';
-
-// can now be this:
-@import 'base';
-```
-
 Testing
 -------
 
@@ -189,7 +131,7 @@ Utilities
 This boilerplate comes with two simple utilities (thanks to [StevenLangbroek](https://github.com/StevenLangbroek)) to help speed up your Redux development process. In `~/src/utils` you'll find exports for `createConstants` and `createReducer`. The former is pretty much an even lazier `keyMirror`, so if you _really_ hate typing out those constants you may want to give it a shot. Check it out:
 
 ```js
-import { createConstants } from 'utils';
+import { createConstants } from '../utils';
 
 export default createConstants(
   'TODO_CREATE',
@@ -201,7 +143,7 @@ export default createConstants(
 The other utility, `create-reducer`, is designed to expedite creating reducers when they're defined via an object map rather than switch statements. As an example, what once looked like this:
 
 ```js
-import { TODO_CREATE } from 'constants/todo';
+import { TODO_CREATE } from '../constants/todo';
 
 const initialState = [];
 const handlers = {
@@ -218,8 +160,8 @@ export default function todo (state = initialState, action) {
 Can now look like this:
 
 ```js
-import { TODO_CREATE } from 'constants/todo';
-import { createReducer } from 'utils';
+import { TODO_CREATE } from '../constants/todo';
+import { createReducer } from '../utils';
 
 const initialState = [];
 
