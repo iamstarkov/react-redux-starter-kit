@@ -24,19 +24,17 @@ export default class Root extends React.Component {
   }
 
   renderRouter () {
-    return <h1>Hi!</h1>;
-
-    // if (__SERVER__) {
-    //   return (
-    //     <Router {...this.props.initialState} />
-    //   );
-    // } else {
-    //   return (
-    //     <Router history={this.props.history}>
-    //       {routes}
-    //     </Router>
-    //   );
-    // }
+    if (__SERVER__) {
+      return (
+        <Router {...this.props.initialState} />
+      );
+    } else {
+      return (
+        <Router history={this.props.history}>
+          {routes}
+        </Router>
+      );
+    }
   }
 
   render () {

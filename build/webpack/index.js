@@ -7,13 +7,13 @@ const publicPath = (
 );
 
 const webpackConfig = {
-  target  : 'web',
+  target : 'web',
   output : {
     filename   : '[name].js',
     path       : config.inProject(config.DIST_DIRNAME),
     publicPath : publicPath
   },
-  entry  : {
+  entry : {
     app : [
       config.inSrc('entry-points/client')
     ],
