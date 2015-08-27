@@ -2,9 +2,7 @@ require('babel/register')({
   stage : 0
 });
 
-GLOBAL.__CLIENT__ = false;
-GLOBAL.__SERVER__ = true;
-GLOBAL.__DEBUG__  = false;
+Object.assign(GLOBAL, require('../config/define-globals')('server'));
 
 var config = require('../config'),
     server = require('../server');

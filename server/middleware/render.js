@@ -1,9 +1,10 @@
-const React    = require('react'),
-      Router   = require('react-router').default,
-      Location = require('react-router/lib/Location'),
-      config   = require('../../config'),
-      Root     = require(config.inSrc('containers/root.jsx')),
-      routes   = require(config.inSrc('routes/index.jsx'));
+import React    from 'react';
+import Router   from 'react-router';
+import Location from 'react-router/lib/Location';
+import config   from '../../config';
+
+const Root   = require(config.inSrc('containers/root.jsx'));
+const routes = require(config.inSrc('routes/index.jsx'));
 
 function renderIntoTemplate (template, content) {
   return template.replace('{content}', content);

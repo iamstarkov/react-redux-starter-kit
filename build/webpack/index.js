@@ -1,6 +1,7 @@
 const assign  = require('object-assign'),
       webpack = require('webpack'),
-      config  = require('../../config');
+      config  = require('../../config'),
+      globals = require('../../config/define-globals');
 
 const publicPath = (
   'http://' + config.HOST + ':' + config.WEBPACK_PORT + '/' + config.DIST + '/'
@@ -20,42 +21,14 @@ const webpackConfig = {
     vendor : config.VENDOR_DEPENDENCIES
   },
   plugins : [
-    new webpack.DefinePlugin({
-      'process.env' : {
-        'NODE_ENV' : JSON.stringify(config.NODE_ENV)
-      },
-      '__CLIENT__' : true,
-      '__SERVER__' : false,
-      '__DEBUG__'  : config.__DEBUG__,
-      '__PROD__'   : config.__PROD__,
-      '__DEV__'    : config.__DEV__
-    }),
+    new webpack.DefinePlugin(globals('client')),
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.CommonsChunkPlugin(
       'vendor', '[name].js'
     )
   ],
   resolve : {
-    extensions : ['', '.js', '.jsx'],
-    alias : [
-      'actions',
-      'components',
-      'constants',
-      'containers',
-      'dispatchers',
-      'layouts',
-      'models',
-      'reducers',
-      'routes',
-      'services',
-      'stores',
-      'styles',
-      'utils',
-      'views'
-    ].reduce(function (acc, x) {
-      acc[x] = config.inSrc(x);
-      return acc;
-    }, {})
+    extensions : ['', '.js', '.jsx']
   },
   module : {
     preLoaders : [
