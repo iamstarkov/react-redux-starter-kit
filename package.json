@@ -13,8 +13,8 @@
     "test:unit": "node ./node_modules/karma/bin/karma start",
     "test:server": "mocha --harmony server/scripts/test.js",
     "deploy": "npm run test:unit && npm run compile && npm run test:server",
-    "server:start": "node --harmony ./server/scripts/start",
-    "server:dev": "nodemon --harmony --watch server ./server/scripts/start"
+    "server:start": "node --harmony ./bin/server",
+    "server:dev": "nodemon --harmony --watch server ./bin/server"
   },
   "author": "David Zukowski <david@zuko.me> (http://zuko.me)",
   "license": "MIT",

@@ -14,16 +14,25 @@ app.use(require('./middleware/logger'));
 // ------------------------------------
 // Static File Middleware
 // ------------------------------------
-app.use(serve(config.inDist('client'), {
-  index : '__IGNORE_INDEX.HTML__'
-}));
+app.use(serve(config.inProject(config.DIST_DIRNAME)));
 
 // ------------------------------------
 // View Rendering
 // ------------------------------------
-const template = fs.readFileSync(config.inDist('client/index.html'), 'utf-8')
-  .replace('<div id="mount"></div>', '<div id="mount">${content}</div>');
+const template = `
+  <!doctype html>
+  <html lang="en">
+  <head>
+    <title>React Redux Starter Kit</title>
+  </head>
+  <body>
+    <div id="root">{content}</div>
+    <script src="/vendor.js"></script>
+    <script src="/app.js"></script>
+  </body>
+  </html>
+`;
 
-app.use(require('./middleware/render-route')(template));
+app.use(require('./middleware/render')(template));
 
 module.exports = app;

@@ -4,7 +4,7 @@ const resolve = require('path').resolve,
       argv    = require('yargs').argv,
       _slice  = [].slice;
 
-const SRC_DIRNAME  = 'src',
+const SRC_DIRNAME  = 'client',
       DIST_DIRNAME = 'dist',
       PROJECT_PATH = resolve(__dirname, '../');
 

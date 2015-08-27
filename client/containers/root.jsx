@@ -1,11 +1,11 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
-import store from 'stores';
-import routes from 'routes';
+import store from '../stores';
+import routes from '../routes';
 import { DevTools, LogMonitor, DebugPanel } from 'redux-devtools/lib/react';
 
-export default class ClientApp extends React.Component {
+export default class Root extends React.Component {
   static propTypes = {
     history      : React.PropTypes.object,
     initialState : React.PropTypes.object
@@ -24,17 +24,19 @@ export default class ClientApp extends React.Component {
   }
 
   renderRouter () {
-    if (__SERVER__) {
-      return (
-        <Router {...this.props.initialState} />
-      );
-    } else {
-      return (
-        <Router history={this.props.history}>
-          {routes}
-        </Router>
-      );
-    }
+    return <h1>Hi!</h1>;
+
+    // if (__SERVER__) {
+    //   return (
+    //     <Router {...this.props.initialState} />
+    //   );
+    // } else {
+    //   return (
+    //     <Router history={this.props.history}>
+    //       {routes}
+    //     </Router>
+    //   );
+    // }
   }
 
   render () {
