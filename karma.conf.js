@@ -1,1 +1,1 @@
-module.exports = require('./build/karma/index');
+module.exports = require('./build/karma');

@@ -15,7 +15,7 @@ function inProject () {
 // ------------------------------------
 // Configuration Definition
 // ------------------------------------
-module.exports = exports = {
+const config = {
 
   // environment globals
   NODE_ENV  : process.env.NODE_ENV,
@@ -48,5 +48,26 @@ module.exports = exports = {
   // server configuration
   HOST         : 'localhost',
   WEBPACK_PORT : 3001,
-  SERVER_PORT  : process.env.PORT || 3000
+  SERVER_PORT  : process.env.PORT || 3000,
+
+  // karma configuration
+  KARMA_ENTRY : 'karma.entry.js'
 };
+
+// global definitions helper
+config.defineGlobals = function (target) {
+  target = target.toLowerCase();
+
+  return {
+    __CLIENT__    : target === 'client',
+    __SERVER__    : target === 'server',
+    __DEBUG__     : config.__DEBUG__,
+    __DEV__       : config.__DEV__,
+    __PROD__      : config.__PROD__,
+    'process.env' : {
+      'NODE_ENV' : JSON.stringify(config.NODE_ENV)
+    }
+  };
+};
+
+module.exports = exports = config;

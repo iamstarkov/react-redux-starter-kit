@@ -1,11 +1,10 @@
 const webpack = require('webpack'),
-      config  = require('../../config'),
+      config  = require('../config'),
       WebpackDevServer = require('webpack-dev-server'),
-      webpackConfig = require('../webpack/client');
+      webpackConfig = require('./webpack/client');
 
 const server = new WebpackDevServer(webpack(webpackConfig), {
   contentBase : config.inProject(config.SRC_DIRNAME),
-  // contentBase : webpackConfig.output.publicPath,
   publicPath : webpackConfig.output.publicPath,
   hot    : true,
   quiet  : config.QUIET_MODE,

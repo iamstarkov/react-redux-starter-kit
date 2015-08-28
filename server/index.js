@@ -5,7 +5,6 @@ const fs     = require('fs'),
 
 const app = koa();
 
-
 // ------------------------------------
 // Response Time Header and Logging
 // ------------------------------------
@@ -30,6 +29,7 @@ const template = `
   </head>
   <body>
     <div id="root">{content}</div>
+    <script src="//${config.HOST}:${ASSETS_PORT}/vendor.js"></script>
     <script src="//${config.HOST}:${ASSETS_PORT}/app.js"></script>
   </body>
   </html>

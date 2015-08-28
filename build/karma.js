@@ -1,18 +1,19 @@
-const config    = require('../../config'),
-      webpackConfig    = require('../webpack/client'),
-      KARMA_ENTRY_FILE = 'karma.entry.js';
+const config        = require('../config'),
+      webpack       = require('webpack'),
+      webpackConfig = require('./webpack/client');
 
 function makeDefaultConfig () {
   const preprocessors = {};
 
-  preprocessors[KARMA_ENTRY_FILE] = ['webpack'];
+  preprocessors[config.KARMA_ENTRY] = ['webpack'];
   preprocessors[config.SRC_DIRNAME + '/**/*.js'] = ['webpack'];
 
   return {
     files : [
       './node_modules/phantomjs-polyfill/bind-polyfill.js',
-      config.inProject(KARMA_ENTRY_FILE)
+      config.inProject(config.KARMA_ENTRY)
     ],
+    singleRun  : config.__PROD__,
     frameworks : ['chai', 'mocha'],
     preprocessors : preprocessors,
     reporters : ['spec'],
@@ -20,8 +21,11 @@ function makeDefaultConfig () {
     webpack : {
       devtool : 'inline-source-map',
       resolve : webpackConfig.resolve,
-      plugins : webpackConfig.plugins,
-      module  : {
+      plugins : [
+        new webpack.DefinePlugin(config.defineGlobals('client')),
+        new webpack.optimize.DedupePlugin(),
+      ],
+      module : {
         loaders : webpackConfig.module.loaders
       }
     },

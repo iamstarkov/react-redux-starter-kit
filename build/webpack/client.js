@@ -1,7 +1,6 @@
 const assign  = require('object-assign'),
       webpack = require('webpack'),
-      config  = require('../../config'),
-      globals = require('../../config/define-globals');
+      config  = require('../../config');
 
 const publicPath = (
   'http://' + config.HOST + ':' + config.WEBPACK_PORT + '/'
@@ -19,11 +18,15 @@ const webpackConfig = {
       'webpack-dev-server/client?' + publicPath,
       'webpack/hot/only-dev-server',
       config.inSrc('entry-points/client')
-    ]
+    ],
+    vendor : config.VENDOR_DEPENDENCIES
   },
   plugins : [
-    new webpack.DefinePlugin(globals('client')),
-    new webpack.optimize.DedupePlugin()
+    new webpack.DefinePlugin(config.defineGlobals('client')),
+    new webpack.optimize.DedupePlugin(),
+    new webpack.optimize.CommonsChunkPlugin(
+      'vendor', '[name].js'
+    )
   ],
   resolve : {
     extensions : ['', '.js', '.jsx']
@@ -70,12 +73,7 @@ if (config.__DEV__) {
 }
 
 if (config.__PROD__) {
-  // webpackConfig.entry.vendor = config.VENDOR_DEPENDENCIES;
-
   webpackConfig.plugins.push(
-    // new webpack.optimize.CommonsChunkPlugin(
-    //   'vendor', '[name].js'
-    // ),
     new webpack.optimize.UglifyJsPlugin({
       output : {
         'comments'  : false
