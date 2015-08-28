@@ -1,16 +1,14 @@
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
-const resolve = require('path').resolve,
-      argv    = require('yargs').argv,
-      _slice  = [].slice;
+import { resolve } from 'path';
+import { argv }    from 'yargs';
 
 const SRC_DIRNAME  = 'client',
       DIST_DIRNAME = 'dist',
       PROJECT_PATH = resolve(__dirname, '../');
 
-function inProject () {
-  return resolve.apply(resolve, [PROJECT_PATH].concat(_slice.apply(arguments)));
-}
+const inProject = (...args) =>
+  resolve.apply(resolve, [PROJECT_PATH, ...args]);
 
 // ------------------------------------
 // Configuration Definition
@@ -31,8 +29,8 @@ const config = {
   DIST_DIRNAME : DIST_DIRNAME,
   PROJECT_PATH : PROJECT_PATH,
   inProject : inProject,
-  inSrc     : inProject.bind(undefined, SRC_DIRNAME),
-  inDist    : inProject.bind(undefined, DIST_DIRNAME),
+  inSrc     : inProject.bind(null, SRC_DIRNAME),
+  inDist    : inProject.bind(null, DIST_DIRNAME),
 
   // build system
   VENDOR_DEPENDENCIES : [
@@ -73,4 +71,4 @@ config.defineGlobals = function (target) {
   };
 };
 
-module.exports = exports = config;
+export default config;

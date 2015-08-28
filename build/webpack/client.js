@@ -92,4 +92,4 @@ if (config.__PROD__) {
   );
 }
 
-module.exports = exports = webpackConfig;
+export default webpackConfig;

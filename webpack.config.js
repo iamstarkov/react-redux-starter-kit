@@ -1,5 +1,2 @@
-require('babel/register')({
-  stage : 0
-});
-
+require('babel/register');
 module.exports = require('./build/webpack/client');

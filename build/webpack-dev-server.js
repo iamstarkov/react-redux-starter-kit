@@ -1,7 +1,7 @@
-const webpack = require('webpack'),
-      config  = require('../config'),
-      WebpackDevServer = require('webpack-dev-server'),
-      webpackConfig = require('./webpack/client');
+import webpack from 'webpack';
+import WebpackDevServer from 'webpack-dev-server';
+import config from '../config';
+import webpackConfig from './webpack/client';
 
 const server = new WebpackDevServer(webpack(webpackConfig), {
   contentBase : config.inProject(config.SRC_DIRNAME),
@@ -17,4 +17,4 @@ const server = new WebpackDevServer(webpack(webpackConfig), {
   historyApiFallback : true
 });
 
-module.exports = exports = server;
+export default server;

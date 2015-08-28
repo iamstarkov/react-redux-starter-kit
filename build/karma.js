@@ -43,6 +43,4 @@ function makeKarmaConfig () {
   };
 }
 
-module.exports = function (karmaConfig) {
-  return karmaConfig.set(makeKarmaConfig());
-};
+export default (karmaConfig) => karmaConfig.set(makeKarmaConfig());
