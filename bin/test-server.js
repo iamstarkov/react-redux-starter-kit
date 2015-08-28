@@ -1,5 +1,8 @@
 require('babel/register');
 
+const config = require('../config');
+Object.assign(GLOBAL, config.defineGlobals('server'));
+
 const server  = require('../server'),
       request = require('supertest').agent(server.listen());
 

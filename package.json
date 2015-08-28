@@ -6,14 +6,14 @@
   "scripts": {
     "clean": "rm -rf dist",
     "compile": "webpack",
-    "dev:client" : "node --harmony ./build/webpack-dev-server &",
+    "dev:client" : "node --harmony ./bin/webpack-dev-server &",
     "dev:server" : "nodemon -e js,jsx --watch server --watch client ./bin/server --harmony",
     "dev": "npm run dev:client && npm run dev:server",
     "dev:debug": "npm run dev -- --debug",
     "dev:quiet": "npm run dev -- --quiet",
     "test": "npm run test:unit && npm run test:server",
     "test:unit": "node ./node_modules/karma/bin/karma start",
-    "test:server": "mocha --harmony server/scripts/test.js",
+    "test:server": "mocha --harmony ./bin/test-server.js",
     "deploy": "npm run test:unit && npm run compile && npm run test:server"
   },
   "author": "David Zukowski <david@zuko.me> (http://zuko.me)",

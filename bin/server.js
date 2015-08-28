@@ -1,6 +1,4 @@
-require('babel/register')({
-  stage : 0
-});
+require('babel/register');
 
 const config = require('../config');
 Object.assign(GLOBAL, config.defineGlobals('server'));

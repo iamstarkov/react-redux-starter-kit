@@ -1,22 +1,15 @@
-const assign  = require('object-assign'),
-      webpack = require('webpack'),
-      config  = require('../../config');
-
-const publicPath = (
-  'http://' + config.HOST + ':' + config.WEBPACK_PORT + '/'
-);
+import webpack from 'webpack';
+import config from '../../config';
 
 const webpackConfig = {
   target : 'web',
   output : {
     filename   : '[name].js',
     path       : config.inProject(config.DIST_DIRNAME),
-    publicPath : publicPath
+    publicPath : config.publicPath
   },
   entry : {
     app : [
-      'webpack-dev-server/client?' + publicPath,
-      'webpack/hot/only-dev-server',
       config.inSrc('entry-points/client')
     ],
     vendor : config.VENDOR_DEPENDENCIES
@@ -43,17 +36,17 @@ const webpackConfig = {
       {
         test : /\.(js|jsx)$/,
         include : config.inProject(config.SRC_DIRNAME),
-        loaders : ['react-hot', 'babel?optional[]=runtime&stage=0']
-      },
-      {
-        test : /\.scss$/,
-        loaders : [
-          'style-loader',
-          'css-loader',
-          'autoprefixer?browsers=last 2 version',
-          'sass-loader?includePaths[]=' + config.inSrc('styles')
-        ]
+        loaders : ['babel?optional[]=runtime&stage=0']
       }
+      // {
+      //   test : /\.scss$/,
+      //   loaders : [
+      //     'style-loader',
+      //     'css-loader',
+      //     'autoprefixer?browsers=last 2 version',
+      //     'sass-loader?includePaths[]=' + config.inSrc('styles')
+      //   ]
+      // }
     ]
   },
   eslint : {
@@ -66,10 +59,23 @@ const webpackConfig = {
 // Environment-Specific Defaults
 // ----------------------------------
 if (config.__DEV__) {
+  webpackConfig.entry.app = [
+    `webpack-dev-server/client?${config.publicPath}`,
+    'webpack/hot/only-dev-server',
+    ...webpackConfig.entry.app
+  ];
+
   webpackConfig.plugins.push(
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin()
   );
+
+  webpackConfig.module.loaders = webpackConfig.module.loaders.map(loader => {
+    if (/js/.test(loader.test)) {
+      loader.loaders.unshift('react-hot');
+    }
+    return loader;
+  });
 }
 
 if (config.__PROD__) {

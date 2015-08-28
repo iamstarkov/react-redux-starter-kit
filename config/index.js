@@ -54,6 +54,9 @@ const config = {
   KARMA_ENTRY : 'karma.entry.js'
 };
 
+// webpack public path
+config.publicPath = 'http://' + config.HOST + ':' + config.WEBPACK_PORT + '/';
+
 // global definitions helper
 config.defineGlobals = function (target) {
   target = target.toLowerCase();

@@ -1,8 +1,8 @@
-const config        = require('../config'),
-      webpack       = require('webpack'),
-      webpackConfig = require('./webpack/client');
+import webpack       from 'webpack';
+import config        from '../config';
+import webpackConfig from './webpack/client';
 
-function makeDefaultConfig () {
+function makeKarmaConfig () {
   const preprocessors = {};
 
   preprocessors[config.KARMA_ENTRY] = ['webpack'];
@@ -44,5 +44,5 @@ function makeDefaultConfig () {
 }
 
 module.exports = function (karmaConfig) {
-  return karmaConfig.set(makeDefaultConfig());
+  return karmaConfig.set(makeKarmaConfig());
 };
