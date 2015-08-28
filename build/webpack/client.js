@@ -4,7 +4,7 @@ const assign  = require('object-assign'),
       globals = require('../../config/define-globals');
 
 const publicPath = (
-  'http://' + config.HOST + ':' + config.WEBPACK_PORT + '/' + config.DIST + '/'
+  'http://' + config.HOST + ':' + config.WEBPACK_PORT + '/'
 );
 
 const webpackConfig = {
@@ -16,6 +16,8 @@ const webpackConfig = {
   },
   entry : {
     app : [
+      'webpack-dev-server/client?' + publicPath,
+      'webpack/hot/only-dev-server',
       config.inSrc('entry-points/client')
     ]
   },
@@ -38,7 +40,7 @@ const webpackConfig = {
       {
         test : /\.(js|jsx)$/,
         include : config.inProject(config.SRC_DIRNAME),
-        loaders : ['babel?optional[]=runtime&stage=0']
+        loaders : ['react-hot', 'babel?optional[]=runtime&stage=0']
       },
       {
         test : /\.scss$/,
@@ -68,12 +70,12 @@ if (config.__DEV__) {
 }
 
 if (config.__PROD__) {
-  webpackConfig.entry.vendor = config.VENDOR_DEPENDENCIES;
+  // webpackConfig.entry.vendor = config.VENDOR_DEPENDENCIES;
 
   webpackConfig.plugins.push(
-    new webpack.optimize.CommonsChunkPlugin(
-      'vendor', '[name].js'
-    ),
+    // new webpack.optimize.CommonsChunkPlugin(
+    //   'vendor', '[name].js'
+    // ),
     new webpack.optimize.UglifyJsPlugin({
       output : {
         'comments'  : false

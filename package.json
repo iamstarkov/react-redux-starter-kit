@@ -6,7 +6,9 @@
   "scripts": {
     "clean": "rm -rf dist",
     "compile": "webpack",
-    "dev": "node --harmony ./build/webpack-dev-server",
+    "dev:client" : "node --harmony ./build/webpack-dev-server",
+    "dev:server" : "nodemon -e js,jsx --watch server --watch client ./bin/server --harmony &",
+    "dev": "npm run dev:server && npm run dev:client",
     "dev:debug": "npm run dev -- --debug",
     "dev:quiet": "npm run dev -- --quiet",
     "test": "npm run test:unit && npm run test:server",

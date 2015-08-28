@@ -5,6 +5,7 @@ const fs     = require('fs'),
 
 const app = koa();
 
+
 // ------------------------------------
 // Response Time Header and Logging
 // ------------------------------------
@@ -19,6 +20,8 @@ app.use(serve(config.inProject(config.DIST_DIRNAME)));
 // ------------------------------------
 // View Rendering
 // ------------------------------------
+const ASSETS_PORT = config.__DEV__ ? 3001 : 3000;
+
 const template = `
   <!doctype html>
   <html lang="en">
@@ -27,8 +30,7 @@ const template = `
   </head>
   <body>
     <div id="root">{content}</div>
-    <script src="/vendor.js"></script>
-    <script src="/app.js"></script>
+    <script src="//${config.HOST}:${ASSETS_PORT}/app.js"></script>
   </body>
   </html>
 `;

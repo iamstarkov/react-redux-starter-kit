@@ -1,5 +1,5 @@
 const config    = require('../../config'),
-      webpackConfig    = require('../webpack/index'),
+      webpackConfig    = require('../webpack/client'),
       KARMA_ENTRY_FILE = 'karma.entry.js';
 
 function makeDefaultConfig () {

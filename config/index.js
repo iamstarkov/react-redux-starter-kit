@@ -46,6 +46,7 @@ module.exports = exports = {
   ],
 
   // server configuration
-  WEBPACK_PORT : 3000,
-  SERVER_PORT  : process.env.PORT || 4000
+  HOST         : 'localhost',
+  WEBPACK_PORT : 3001,
+  SERVER_PORT  : process.env.PORT || 3000
 };
